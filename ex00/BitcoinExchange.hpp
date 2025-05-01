@@ -7,6 +7,7 @@
 #include <sstream>
 #include <algorithm>
 #include <map>
+#include <climits>
 
 class BitcoinExchange {
 	public:
@@ -15,7 +16,12 @@ class BitcoinExchange {
 		BitcoinExchange& operator=(const BitcoinExchange& src);
 		~BitcoinExchange();
 
-		class InvalidFile: public std::exception {
+		class InvalidDbFile: public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
+
+		class InvalidInputFile: public std::exception {
 			public:
 				virtual const char* what() const throw();
 		};
@@ -30,7 +36,15 @@ class BitcoinExchange {
 				virtual const char* what() const throw();
 		};
 
-		std::map<std::string, float> loadDatabase(const std::string& filename);
+		class InvalidLineFormat: public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
+
+	void	parseFile(std::string filename, int filetype);
+	void	loadDatabase();
+	void	parseInput(char *input);
+	void	checkValue(std::string value);
 
 	private:
 		std::map<std::string, float> _db;
