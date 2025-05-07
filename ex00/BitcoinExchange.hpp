@@ -41,10 +41,8 @@ class BitcoinExchange {
 				virtual const char* what() const throw();
 		};
 
-	void	parseFile(std::string filename, int filetype);
 	void	loadDatabase();
 	void	parseInput(char *input);
-	void	checkValue(std::string value);
 
 	private:
 		std::map<std::string, float> _db;
